@@ -1,9 +1,6 @@
 const reducer = (state = 0, action) => {
     // state - текущий стейт
     // action - действие выполняемое над стейтом
-    if (action.type === 'INC') {
-        return state + 1;
-    }
     switch (action.type) {
         case 'INC':
             return state + 1;
