@@ -1,30 +1,26 @@
 import {createStore, bindActionCreators} from 'redux';
 import reducer from './reducer';
-import {inc, dec, rnd} from './actions';
+import * as actions from './actions';
 
 const store = createStore(reducer);
 const { dispatch } = store;
 
-// Можно передать объект функций, вернется тоже объект но уже из обернутых функций, их можно будет деструктурирровть
-const {incDispatch, decDispatch, rndDispatch} = bindActionCreators({
-    incDispatch: inc,
-    decDispatch: dec,
-    rndDispatch: rnd
-}, dispatch);
+// Теперь функции в объекте будут называться так же как оригинальные экшенКриэйтеры из файла actions.js
+const {inc, dec, rnd} = bindActionCreators(actions, dispatch);
 
 document
   .getElementById('inc')
-  .addEventListener('click', incDispatch);
+  .addEventListener('click', inc);
 
 document
   .getElementById('dec')
-  .addEventListener('click', decDispatch);
+  .addEventListener('click', dec);
 
 document
   .getElementById('rnd')
   .addEventListener('click', () => {
       const payload = Math.floor(Math.random() * 10);
-      rndDispatch(payload);
+      rnd(payload);
   });
 
 const update = () => {
