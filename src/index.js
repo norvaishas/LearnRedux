@@ -1,3 +1,4 @@
+import {createStore} from 'redux';
 
 const reducer = (state = 0, action) => {
     // state - текущий стейт
@@ -9,15 +10,27 @@ const reducer = (state = 0, action) => {
         case 'INC':
             return state + 1;
 
+        case 'DEC':
+            return state - 1;
+
         // Если значение из action.type не распознано, вернуть state без изменений
         default:
             return state;
     }
 };
 
-let state = reducer( undefined, {} ); // Инициализация стейта - action специально пустой чтоб попасть в default
-state = reducer(state, { type: 'INC' });
-console.log(state);
+const store = createStore(reducer);
 
-state = reducer(state, { type: 'INC' });
-console.log(state);
+// Подписаться на обновления стора
+store.subscribe(() => {
+    console.log(
+      // Получение текущего стейта
+      store.getState()
+    );
+})
+
+// Обработка новых actions
+store.dispatch({type: 'INC'}); // 1
+store.dispatch({type: 'INC'}); // 2
+store.dispatch({type: 'QWERTY'}); // 2
+store.dispatch({type: 'DEC'}); // 1
