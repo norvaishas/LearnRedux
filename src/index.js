@@ -21,16 +21,21 @@ const reducer = (state = 0, action) => {
 
 const store = createStore(reducer);
 
-// Подписаться на обновления стора
-store.subscribe(() => {
-    console.log(
-      // Получение текущего стейта
-      store.getState()
-    );
+document
+  .getElementById('inc')
+  .addEventListener('click', () => {
+    store.dispatch( {type: 'INC'});
 })
 
-// Обработка новых actions
-store.dispatch({type: 'INC'}); // 1
-store.dispatch({type: 'INC'}); // 2
-store.dispatch({type: 'QWERTY'}); // 2
-store.dispatch({type: 'DEC'}); // 1
+document
+  .getElementById('dec')
+  .addEventListener('click', () => {
+    store.dispatch( {type: 'DEC'});
+})
+
+const update = () => {
+    document.getElementById('counter')
+      .innerHTML = store.getState();
+}
+
+store.subscribe(update);
