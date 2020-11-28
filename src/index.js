@@ -5,9 +5,12 @@ import {inc, dec, rnd} from './actions';
 const store = createStore(reducer);
 const { dispatch } = store;
 
-const incDispatch = bindActionCreators(inc, dispatch);
-const decDispatch = bindActionCreators(dec, dispatch);
-const rndDispatch = bindActionCreators(rnd, dispatch);
+// Можно передать объект функций, вернется тоже объект но уже из обернутых функций, их можно будет деструктурирровть
+const {incDispatch, decDispatch, rndDispatch} = bindActionCreators({
+    incDispatch: inc,
+    decDispatch: dec,
+    rndDispatch: rnd
+}, dispatch);
 
 document
   .getElementById('inc')
