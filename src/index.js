@@ -1,33 +1,8 @@
 import {createStore} from 'redux';
-
-const reducer = (state = 0, action) => {
-    // state - текущий стейт
-    // action - действие выполняемое над стейтом
-    if (action.type === 'INC') {
-        return state + 1;
-    }
-    switch (action.type) {
-        case 'INC':
-            return state + 1;
-
-        case 'DEC':
-            return state - 1;
-
-        case 'RND':
-            return state + action.payload;
-
-        // Если значение из action.type не распознано, вернуть state без изменений
-        default:
-            return state;
-    }
-};
+import reducer from './reducer';
+import {inc, dec, rnd} from './actions';
 
 const store = createStore(reducer);
-
-// Action creators
-const inc = () => ({ type: 'INC' });
-const dec = () => ({ type: 'DEC' });
-const rnd = (payload) => ({ type: 'RND', payload})
 
 document
   .getElementById('inc')
