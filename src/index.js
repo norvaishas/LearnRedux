@@ -1,28 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {createStore, bindActionCreators} from 'redux';
+import {createStore} from 'redux';
+import { Provider } from 'react-redux'
 import reducer from './reducer';
-import * as actions from './actions';
-import Counter from './counter';
+import App from './components/app';
 
 const store = createStore(reducer);
-const { dispatch } = store;
 
-// Теперь функции в объекте будут называться так же как оригинальные экшенКриэйтеры из файла actions.js
-const {inc, dec, rnd} = bindActionCreators(actions, dispatch);
+ReactDOM.render(
+  // Провайдер с помощью Context API делает store доступным в любом компоненте приложения
+  <Provider store={store}>
+      <App/>
+  </Provider>,
+  document.getElementById('root')
+);
 
-const update = () => {
-    ReactDOM.render(
-      <Counter
-        counter={store.getState()}
-        inc={inc}
-        dec={dec}
-        rnd={() => {
-            const value = Math.floor(Math.random() * 10 );
-            rnd(value);
-        }}/>,
-      document.getElementById('root'));
-}
-
-update();
-store.subscribe(update);
+// Так же, провайдер сам следит за обновлением стора и обновляет приложение как только стейт изменился
