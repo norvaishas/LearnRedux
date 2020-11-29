@@ -1,4 +1,4 @@
-const reducer = (state = 15, action) => {
+const reducer = (state = 0, action) => {
     // state - текущий стейт
     // action - действие выполняемое над стейтом
     switch (action.type) {
