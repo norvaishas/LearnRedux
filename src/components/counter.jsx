@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import {inc, dec, rnd} from '../actions'
 // connect - это HOC который передает значения из store в компонент
 
 const Counter = ({ counter, inc, dec, rnd }) => {
@@ -27,4 +28,16 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps)(Counter);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        // Здесь используются actions из импорта (а не из пропсов)
+        inc: () => dispatch(inc()),
+        dec: () => dispatch(dec()),
+        rnd: () => {
+            const rndValue = Math.floor(Math.random() * 10);
+            dispatch(rnd(rndValue));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
